@@ -10,13 +10,20 @@
     statusUpdates = null;
     newNode = null;
 function update() {
-    newNode = document.createElement("div");
+   /* newNode = document.createElement("div");
     newUpdate = document.createTextNode("This is another test.");
     
     newNode.appendChild(newUpdate);
 
     statusUpdates = document.getElementById("s");
-    document.body.insert(newNode, statusUpdates);
+    document.body.insert(newNode, statusUpdates);*/
+    today = new Date();
+    dte = today.getMonth() + "/" + today.getDate() + "/" + today.getFullYear();
+    time = today.getHours() + ":" + today.getMinutes();
+    upText = "" + dte + " " + time + " - ";
+    upText += document.getElementById("msg").value + '\n';
+    var newUpdate=document.createTextNode(upText);
+    document.getElementById("status").insertBefore(newUpdate, document.getElementById("status").firstChild);
 }
 </script>
 </head>
