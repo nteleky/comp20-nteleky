@@ -2,24 +2,11 @@
 <html>
     <head>
         <title>MS Pac Man - Lab 6 - Nicholas Teleky</title>
-        <script>
-            function draw() {
-                canvas = document.getElementById('test');
-
-                //Check that canvas works on browser
-                if (canvas.getContext) {
-                    ctx = canvas.getContext('2d');
-                    ctx.fillStyle = "rgb(5, 210, 90)";
-                    ctx.fillRect (80, 50, 90, 50);
-               } else {
-                 alert("Epic fail. This doesn't work. Get a better browser.")
-                 }
-            }
-        </script>
+        <script src="mspacman.js" type="text/javascript"> </script>
     </head>
 
-    <body onload="draw();">
-        <canvas id="test" width="400" height="400">
+    <body onload="draw()">
+        <canvas id="pacman" width="465" height="150">
     </body>
 
 </html>
