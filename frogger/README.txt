@@ -1,5 +1,5 @@
 Comp20 - Web Programming
-Assignment 2: Frogger Part 1
+Assignment 2: Frogger Part 1 -- COMPLETE
 Nicholas Teleky
 
 2/15/13:
