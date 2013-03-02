@@ -13,7 +13,8 @@
         list = document.getElementById("list");
 
         br = document.createElement("br");
-     /* Parses JSON for each object and prints a node */ 
+        /* Parses JSON for each object and prints a node */
+        /*
         for (i = 0; i <jobs.length ; i++) {
             console.log(i + "\n");
             jobList = document.createElement("jobListing");
@@ -22,6 +23,16 @@
             jobList.appendChild(jobContent);
             list.appendChild(jobList);
             list.insertBefore(br, jobList);
+        }
+        */
+        for (i = 0; i < jobs.length; i++) {
+            jobList = document.createElement("jobList");
+            jobList.className = "jobListing";
+            jobList.innerHTML = "Company: " + jobs[i].company + "<br>" +
+                                "Location: " + jobs[i].location + "<br>" +
+                                "Position: " + jobs[i].position + "<br><br>";
+            list.appendChild(jobList);
+
         }
 
     }
