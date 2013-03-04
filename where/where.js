@@ -13,8 +13,8 @@
 
 function loadMap() {
     mapOptions = {
-        center: new google.maps.LatLng(42.320685, -71.052391),
-        zoom: 12,
+        center: new google.maps.LatLng(42.31129, -71.053331),
+        zoom: 13,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
