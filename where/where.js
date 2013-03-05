@@ -93,6 +93,13 @@ function loadRedLine() {
 	pt = new google.maps.LatLng(42.2078543, -71.0011385);
 	markers.push(new google.maps.Marker({position: pt, map: map, title: "Braintree", icon: tlogo}));
 	redBranchBraintree.push(pt);
+    for (m = 0; m < markers.length; m++) {
+        markers[m].setMap(map);
+        google.maps.event.addListener(markers[m], 'click', function() {
+            //GET AJAX SCHEDULE FOR TRAINS HERE AND RENDER IN PRETTY TABLE
+        
+        });
+    }
 
     // Create polyline for Red Line Subway Stops
     redLine = new google.maps.Polyline({
@@ -115,6 +122,17 @@ function loadRedLine() {
     });
     redLine.setMap(map);
 
+}
+
+function findCarmenAndWaldo() {
+    //Get positions of carmen and waldo, and print them to the screen.
+}
+
+function getMyLocation() {
+    //Do this after everything else has been loaded.
+}
+
+function findDistances() {
 
 }
 
