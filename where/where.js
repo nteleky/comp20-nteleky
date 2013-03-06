@@ -5,13 +5,16 @@
 
 //Declare global variables
     var map;
+    var infoWindow = new google.maps.InfoWindow();
     var redStations = [];
         var redBranchBraintree = [];
         var redBranchAshmont = [];
     var markers = [];
     var mapOptions = [];
+    var request;
 
 function loadMap() {
+    checkAJAX();
     mapOptions = {
         center: new google.maps.LatLng(42.31129, -71.053331),
         zoom: 13,
@@ -19,6 +22,7 @@ function loadMap() {
     };
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
     loadRedLine();
+    findCarmenAndWaldo();
 }
 
 function loadRedLine() {
@@ -93,14 +97,21 @@ function loadRedLine() {
 	pt = new google.maps.LatLng(42.2078543, -71.0011385);
 	markers.push(new google.maps.Marker({position: pt, map: map, title: "Braintree", icon: tlogo}));
 	redBranchBraintree.push(pt);
-    for (m = 0; m < markers.length; m++) {
-        markers[m].setMap(map);
-        google.maps.event.addListener(markers[m], 'click', function() {
-            //GET AJAX SCHEDULE FOR TRAINS HERE AND RENDER IN PRETTY TABLE
-        
-        });
+       
+    if (request == null) {
+        alert("Error creating request object --Ajax not supported?");
+    } else {
+    
+        for (m = 0; m < markers.length; m++) {
+            markers[m].setMap(map);
+            google.maps.event.addListener(markers[m], 'click', function() {
+                //GET AJAX SCHEDULE FOR TRAINS HERE AND RENDER IN PRETTY TABLE
+                content = this.title; //Add all content into this content variable
+                infoWindow.setContent(content);
+                infoWindow.open(map, this);
+            });
+        }
     }
-
     // Create polyline for Red Line Subway Stops
     redLine = new google.maps.Polyline({
         path: redStations,
@@ -124,8 +135,45 @@ function loadRedLine() {
 
 }
 
+
 function findCarmenAndWaldo() {
     //Get positions of carmen and waldo, and print them to the screen.
+    clogo = "images/carmen.png";
+    var cPos;
+    wlogo = "images/waldo.png";
+    var wPos;
+    var parsed = [];
+    str = "";
+        if (request == null) {
+            alert("Error creating request object --Ajax not supported?");
+            return false;
+        }
+    request.onreadystatechange=function() {
+        if (request.readyState==4 && request.status==200) {
+            str = request.responseText;
+            parsed = JSON.parse(str);
+            if (parsed.length == 0) alert("Can't find Carmen or Waldo. Try a reload...?");
+            else {
+                for (i = 0; i < parsed.length; i++) {
+                    if (parsed[i].name == "Waldo") {
+                        wPos = new google.maps.LatLng(parsed[i].loc.latitude, parsed[i].loc.longitude);
+                        wMark = new google.maps.Marker({position: wPos, map: map, title: "Waldo", icon: wlogo});
+                        wMark.setMap(map);
+                    }
+                    if (parsed[i].name == "Carmen Sandiego") {
+                        cPos = new google.maps.LatLng(parsed[i].loc.latitude, parsed[i].loc.longitude);
+                        cMark = new google.maps.Marker({position: cPos, map: map, title: "Carmen Sandiego", icon: clogo});
+                        cMark.setMap(map);
+                    }
+                }
+            }
+            console.log(str);
+        }
+    }
+    request.open("GET", "http://messagehub.herokuapp.com/a3.json", true);
+    request.send();
+   // parsed = JSON.parse(str);
+
 }
 
 function getMyLocation() {
@@ -136,3 +184,21 @@ function findDistances() {
 
 }
 
+function checkAJAX() {
+    try {
+        request = new XMLHttpRequest();
+    }
+    catch (ms1) {
+        try {
+            request = new ActiveXObject("Msxml2.XMLHTTP");
+        }
+        catch (ms2) {
+            try {
+                request = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            catch (ex) {
+                request = null;
+            }
+        }
+     }
+}
