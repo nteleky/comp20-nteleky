@@ -1,6 +1,9 @@
 
-/*
- * 
+/* WHERE.js
+ * Author: Nicholas Teleky
+ * Class: Comp20 - Web Programming
+ * March 6, 2013
+ * Assignment 3
  */
 
 //Declare global variables
@@ -199,6 +202,7 @@ function getMyLocation() {
             myMarker = new google.maps.Marker({position: myPos, map: map, title: "My Location"});
             myMarker.setMap(map);
             findDistances();
+            findClosestTStop();
         });
     } else console.log("No geolocation for you. Get a new browser.");
 
@@ -224,6 +228,31 @@ function findDistances() {
             infoWindow.open(map, cMark);
         });
     } else console.log("No Carmen.");
+}
+
+function findClosestTStop() {
+    
+    var minDistance, markIndex;
+    markIndex = 0; //Initialize value at 0.
+    var lat = markers[markIndex].position.ib;
+    var lon = markers[markIndex].position.jb;
+    minDistance = haversine(myLat, myLong, lat, lon);
+
+    for (m = 1; m < markers.length; m++) { //Find distance between my loc and all other stops to find min.
+        lat = markers[m].position.ib;
+        lon = markers[m].position.jb;
+        tempDist = haversine(myLat, myLong, lat, lon);
+        if (tempDist < minDistance) {
+            minDistance = tempDist;
+            markIndex = m;
+        }
+    }
+    google.maps.event.addListener(myMarker, 'click', function() {
+        content = "Closest T-Stop is " + markers[markIndex].title + ".\n";
+        content += "It is " + minDistance + " miles from your location.";
+        infoWindow.setContent(content);
+        infoWindow.open(map, myMarker);
+    });
 }
 
 function checkAJAX() {

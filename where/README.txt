@@ -13,11 +13,10 @@ Correctly Implemented:
   - Rendered Waldo and Carmen icons in their proper locations.
   - User's location found and displayed on map.
   - Distances to Waldo and Carmen Sandiego displayed when you click on their icon on the map.
+  - Closest T Station to user's location displayed when you click one the user's marker.
 
 Incorrectly/Not Implemented:
   - Train schedule in infowindow for each stop
-  - Closest T Station to user's location.
-  - Distances to Waldo and Carmen Sandiego displayed.
 
 Help Received:
   - Stackoverflow and w3
