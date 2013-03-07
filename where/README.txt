@@ -11,10 +11,12 @@ Correctly Implemented:
   - Locations for Waldo and Carmen found via AJAX.
     - Exceptions for finding both, one, or none added. Can handle all cases.
   - Rendered Waldo and Carmen icons in their proper locations.
+  - User's location found and displayed on map.
 
-Incorrectly Implemented:
-  - Geolocation for users computer.
+Incorrectly/Not Implemented:
   - Train schedule in infowindow for each stop
+  - Closest T Station to user's location.
+  - Distances to Waldo and Carmen Sandiego displayed.
 
 Help Received:
   - Stackoverflow and w3

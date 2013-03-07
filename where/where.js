@@ -7,11 +7,16 @@
     var map;
     var infoWindow = new google.maps.InfoWindow();
     var redStations = [];
-        var redBranchBraintree = [];
-        var redBranchAshmont = [];
+    var redBranchBraintree = [];
+    var redBranchAshmont = [];
     var markers = [];
     var mapOptions = [];
     var request;
+    var myLat;
+    var myLong;
+    var myPos;
+    var myMarker;
+    var me;
 
 function loadMap() {
     checkAJAX();
@@ -23,6 +28,7 @@ function loadMap() {
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
     loadRedLine();
     findCarmenAndWaldo();
+    getMyLocation();
 }
 
 function loadRedLine() {
@@ -167,7 +173,6 @@ function findCarmenAndWaldo() {
                     }
                 }
             }
-            console.log(str);
         }
     }
     request.open("GET", "http://messagehub.herokuapp.com/a3.json", true);
@@ -177,7 +182,15 @@ function findCarmenAndWaldo() {
 }
 
 function getMyLocation() {
-    //Do this after everything else has been loaded.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            myLat = position.coords.latitude;
+            myLon = position.coords.longitude;
+            myPos = new google.maps.LatLng(myLat, myLon);
+            myMarker = new google.maps.Marker({position: myPos, map: map, title: "My Location"});
+            myMarker.setMap(map);
+        });
+    } else console.log("No geolocation for you. Get a new browser.");
 }
 
 function findDistances() {
