@@ -17,6 +17,14 @@
     var myPos;
     var myMarker;
     var me;
+    var cMark;
+    var cLat;
+    var cLon;
+    var cPos;
+    var wMark;
+    var wLat;
+    var wLon;
+    var wPos;
 
 function loadMap() {
     checkAJAX();
@@ -29,6 +37,7 @@ function loadMap() {
     loadRedLine();
     findCarmenAndWaldo();
     getMyLocation();
+
 }
 
 function loadRedLine() {
@@ -145,9 +154,7 @@ function loadRedLine() {
 function findCarmenAndWaldo() {
     //Get positions of carmen and waldo, and print them to the screen.
     clogo = "images/carmen.png";
-    var cPos;
     wlogo = "images/waldo.png";
-    var wPos;
     var parsed = [];
     str = "";
         if (request == null) {
@@ -158,16 +165,18 @@ function findCarmenAndWaldo() {
         if (request.readyState==4 && request.status==200) {
             str = request.responseText;
             parsed = JSON.parse(str);
-            if (parsed.length == 0) alert("Can't find Carmen or Waldo. Try a reload...?");
+            if (parsed.length == 0) console.log("Can't find Carmen or Waldo. Try a reload...?");
             else {
                 for (i = 0; i < parsed.length; i++) {
                     if (parsed[i].name == "Waldo") {
-                        wPos = new google.maps.LatLng(parsed[i].loc.latitude, parsed[i].loc.longitude);
+                        wLat = parsed[i].loc.latitude; wLon = parsed[i].loc.longitude;
+                        wPos = new google.maps.LatLng(wLat, wLon);
                         wMark = new google.maps.Marker({position: wPos, map: map, title: "Waldo", icon: wlogo});
                         wMark.setMap(map);
                     }
                     if (parsed[i].name == "Carmen Sandiego") {
-                        cPos = new google.maps.LatLng(parsed[i].loc.latitude, parsed[i].loc.longitude);
+                        cLat = parsed[i].loc.latitude; cLon = parsed[i].loc.longitude;
+                        cPos = new google.maps.LatLng(cLat, cLon);
                         cMark = new google.maps.Marker({position: cPos, map: map, title: "Carmen Sandiego", icon: clogo});
                         cMark.setMap(map);
                     }
@@ -185,16 +194,36 @@ function getMyLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             myLat = position.coords.latitude;
-            myLon = position.coords.longitude;
-            myPos = new google.maps.LatLng(myLat, myLon);
+            myLong = position.coords.longitude;
+            myPos = new google.maps.LatLng(myLat, myLong);
             myMarker = new google.maps.Marker({position: myPos, map: map, title: "My Location"});
             myMarker.setMap(map);
+            findDistances();
         });
     } else console.log("No geolocation for you. Get a new browser.");
+
 }
 
 function findDistances() {
+  
+    if (wPos != undefined) { // if wLat is defined, then Waldo appears on the screen.
+        var dist = haversine (myLat, myLong, wLat, wLon);
+      //  console.log("Distance from my position to Waldo: " + dist + " miles.");
+        google.maps.event.addListener(wMark, 'click', function() {
+            content = "Distance from my position to Waldo: " + dist + " miles.";
+            infoWindow.setContent(content);
+            infoWindow.open(map, wMark);
+        });
 
+    } else console.log("No Waldo.");
+    if (cPos != undefined) { // if cLat is defined, then Carmen appears on the screen.
+        var dist = haversine (myLat, myLong, cLat, cLon);
+        google.maps.event.addListener(cMark, 'click', function() {
+            content = "Distance from my position to Carmen: " + dist + " miles.";
+            infoWindow.setContent(content);
+            infoWindow.open(map, cMark);
+        });
+    } else console.log("No Carmen.");
 }
 
 function checkAJAX() {
@@ -214,4 +243,25 @@ function checkAJAX() {
             }
         }
      }
+}
+
+Number.prototype.toRad = function() {
+   return this * Math.PI / 180;
+}
+
+function haversine (lat1, lon1, lat2, lon2) {
+    var R = 6371; // km 
+    var x1 = lat2-lat1;
+    var dLat = x1.toRad();  
+    var x2 = lon2-lon1;
+    var dLon = x2.toRad();  
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+                Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2);  
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; 
+
+    d = d * .621371;
+    return d;
+
 }

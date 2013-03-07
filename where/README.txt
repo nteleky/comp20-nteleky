@@ -12,6 +12,7 @@ Correctly Implemented:
     - Exceptions for finding both, one, or none added. Can handle all cases.
   - Rendered Waldo and Carmen icons in their proper locations.
   - User's location found and displayed on map.
+  - Distances to Waldo and Carmen Sandiego displayed when you click on their icon on the map.
 
 Incorrectly/Not Implemented:
   - Train schedule in infowindow for each stop
@@ -24,3 +25,7 @@ Help Received:
 Hours Spent:
   - Approximately 8-10.
      - Most time spent researching how to do things with google maps API and AJAX.
+
+Other notes:
+  - I wasn't entirely sure what to do about Carmen and Waldo if they did not appear on the screen...
+    so I opted to print to console if they did not appear.
