@@ -2,6 +2,7 @@ Comp20 - Web Programming
 Nicholas Teleky
 Assignment 4: Frogger Part 2
 3/19/13
+**Note: Severe illness extention granted until 03/22/2013**
 
 Description:
 
