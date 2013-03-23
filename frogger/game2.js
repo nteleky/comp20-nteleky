@@ -17,6 +17,9 @@ $(document).ready(function() {
     sprites.onload = function () {
         draw_gameboard();
         frog.draw();
+        delay = 1000 //milliseconds
+        game_loop();
+        setInterval(game_loop, delay);
     };
 });
 
@@ -28,28 +31,38 @@ function init_vars() {
     frog = {
         x: 180,
         y: 490,
-        dir: "forward",
+        dir: "up",
         draw: function() {
-            pencil.drawImage(sprites, 10, 367, 25, 25, this.x, this.y, 25, 25);
+            if (this.dir != "none") pencil.drawImage(sprites, 10, 367, 25, 25, this.x, this.y, 25, 25);
+ 
         },
         move: function() {
-            if (this.dir == "forward") this.y = this.y-block.height;
-            else if (this.dir == "backward") this.y = this.y+block.height
+            if (this.dir == "up"){ this.y = this.y-block.height; this.setDirection("none");}
+            if (this.dir == "down"){ this.y = this.y+block.height; this.setDirection("none");}
+            if (this.dir == "left"){ this.x = this.x-block.width; this.setDirection("none");}
+          //  else if (this.dir == "right"){ this.x = this.x+block.width; this.setDirection("none");}
         },
         isValidMove: function() {
-            if (this.dir == "forward") if (this.y-block.height >= 98) return true;
-            else if (this.dir == "backward") if (this.y+block.height <= 520) return true;
-            else if (this.dir == "left") if (this.x-block.width >= 0) return true;
-            else if (this.dir == "right") if (this.x+block.width <= 399) return true;
+            if (this.dir == "up"){ if (this.y-block.height >= 98) return true;}
+            else if (this.dir == "down"){ if (this.y+block.height <= 520) return true;}
+            else if (this.dir == "left"){ if (this.x-block.width >= 0) return true;}
+            else if (this.dir == "right"){ if (this.x+block.width <= 399) return true;}
 
             return false;
         },
         setDirection: function(direction) {
             this.dir = direction;
         }
-
     }
+}
 
+function game_loop() {
+    document.onkeydown = function(e) {
+        if (e.keyCode == 38) {frog.setDirection("up"); frog.move(); frog.draw();}
+        if (e.keyCode == 40) {frog.setDirection("down"); frog.move(); frog.draw();}
+        if (e.keyCode = 37) {frog.setDirection("left"); frog.move(); frog.draw();}
+        if (e.keyCode = 39) {frog.setDirection("right"); frog.move(); frog.draw();}
+    };
 }
 
 function draw_gameboard() {
