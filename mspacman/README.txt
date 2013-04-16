@@ -2,6 +2,7 @@ Comp20 - Web Programming
 Lab 6: Ms. Pac-Man
 Feb 14, 2012
 Programmer: Nick Teleky
+------------------------
 
 
  -- All parts of Lab 6 correctly implemented. Google PacMan board renders with
