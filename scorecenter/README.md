@@ -8,6 +8,9 @@ Due date: 4/18/2013
 Heroku link:
 http://nt-scorecenter.herokuapp.com
 
+* The MongoDB has been filled with a few sample scores/usernames.
+* Currently, so as to not use up dyno hours, web processes have been turned off. They can be turned on if you'd prefer though.
+
 Implemented Correctly:
 --------------------
 * MongoDB and Node.js working properly with heroku
