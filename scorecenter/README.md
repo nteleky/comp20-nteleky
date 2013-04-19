@@ -5,6 +5,8 @@ Programmer: Nicholas Teleky
 Due date: 4/18/2013
 ------------------------
 
+Heroku link:
+http://nt-scorecenter.herokuapp.com
 
 Implemented Correctly:
 --------------------
@@ -16,5 +18,8 @@ Implemented Correctly:
 Implemented Incorrectly:
 --------------------------
 * Sort -- was having trouble with the sort method.
+
+Note: There is little to no formatting in this project... ran out of time
+to make it pretty.
 
 Hours spent: Approximately 15
