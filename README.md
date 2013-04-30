@@ -27,6 +27,3 @@ Table of Repo Contents:
  * Assignment 3: where
  * Assignment 6/7: scorecenter
 
- Lab 11: Closing Survey
- --------------------------------
- 1.) This repository 
