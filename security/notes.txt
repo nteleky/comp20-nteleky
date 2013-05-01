@@ -1,0 +1,16 @@
+
+Comp20 - Assignment 6 Notes:
+
+How to find vulnerabilities:
+ - Can find any tool
+   - Fuzzers, etc.
+
+Don't just say "The application has an XSS vulnerability" -- SHOW how you came
+to that conclusion.
+
+Show steps about how you broke the code.
+
+Do not go to teammates heroku app on heroku; break it locally.
+
+Vulnerabilities:
+ - Asterisks (regular expressions) -- look for 'em
