@@ -1,0 +1,42 @@
+/* Sets up Calibri as a valid font */
+@font-face {
+    font-family: Calibri;
+    src: url("fonts/Calibri.ttf");
+}
+
+html{
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding 0;
+    margin 0 auto;
+    font-family: Calibri, "Lucida Grande", Tahoma, sans-serif;
+    font-size: 14pt;
+}
+
+#header h1{
+    text-decoration: none;
+    text-align:center;
+    font-size: 30pt;
+    font-weight: bold;
+    color: #000;
+    
+}
+    #header h1 span {
+    
+    }
+
+.section{
+
+}
+    .section h1 {
+        font-size: 22pt;
+        margin: 10px;
+        color: #000;
+    }
+    .section p {
+        margin: 5px 5px 5px 20px;
+    }
