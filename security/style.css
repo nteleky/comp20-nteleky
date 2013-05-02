@@ -40,3 +40,32 @@ body {
     .section p {
         margin: 5px 5px 5px 20px;
     }
+#issues.section{
+    font-size: 13pt;
+}
+    #issues.section ol .issue {
+        font-weight: bold;
+        font-size: 20px;
+    }
+    #issues.section ol .issue ul li {
+        text-decoration: none;
+        font-weight: normal;
+        font-size: 13pt;
+        color: #000;
+    }
+    #issues.section ol .issue ul li h1 {
+        font-size: 13pt;
+        color: blue;
+        margin: 0px;
+        display: inline;
+    }
+    #issues.section ol .issue ul li #high {
+        color: red;
+    }
+
+.screenshot{
+    display: block;
+    width:50%;
+    margin-right:auto;
+    margin-left:auto;
+}

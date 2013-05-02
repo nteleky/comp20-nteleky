@@ -28,7 +28,8 @@
             angle, starting with a download of the source code and a local test. We first logged in as a user would, and went through each
             possible function (viewing all scores, viewing high scores via JSON, posting scores into the database, and searching for usernames
             to find highscores for usernames. We then assessed vulnerability to basic attacks, such as changing the database structure, 
-            changing internal database information, uploading large files, and submitting many requests. The source code was then thoroughly
+            changing internal database information, uploading large files, and submitting many requests. The main tool that was used when
+            carrying out this analysis was <a href='http://www.portswigger.net/burp/'>Burp Suite</a>.The source code was then thoroughly
             analyzed to uncover further security leaks.</p>
         </div>
         <div class='section' id='abstract'>
@@ -37,17 +38,61 @@
         </div>
         <div class='section' id='issues'>
             <h1>Issues</h1>
-            <p>Report goes here</p>
-        </div>
-        <div class='section' id='analysis'>
-            <h1>Analysis</h1>
-            <p>Report goes here</p>
+        <ol>
+            <li class='issue'>
+            No User Authentication
+            <ul>
+                <li><h1>Location:</h1> web.js </li>
+                <li><h1>Severity:</h1> <span id='high'>HIGH</span> - Anyone can access API and submit to the scorecenter database (anything from scores to malicious code to large files) </li>
+                <li><h1>Description:</h1> As it stands now, anyone can post to the Scorecenter database, without requiring a verification that
+                the user or game using the API is valid/allowed to do this. As a result, any random game or person could write code to post
+                their own scores/information into the database. This also means that, if launched, a user not affliated with Mao Gaming could
+                add fake high score information, boosting their rating on the site. This destroys the integrity of the Scorecenter and means 
+                that scores posted may not be authentic. </li>
+                <li><h1>Resolution:</h1> An API key (which would secure the API to use only for those with the key)
+                might make the most sense. This would mean that only games/users with the API key could post into the scorecenter.
+                If the goal is for this Scorecenter to be widely used, then creating specific API accounts might also be something
+                to consider (something similar to Apple's GameCenter, which has users create accounts to confirm they have access). </li>
+            </ul>
+            </li>
+
+            <li class='issue'>
+            No Usersearch Input Validation
+            <ul>
+                <li><h1>Location:</h1> web.js, usersearch.html </li>
+                <li><h1>Severity:</h1> <span id='high'>HIGH</span> - Users can be bombarded with popups, taken to phishing sites, or otherwise harmed.
+                </li>
+                <li><h1>Description:</h1> When a user goes to search for the highest scores by a certain username, they do it through a single
+                text-input window, which then returns a page containing the results for that username. Once that input is received, however, it
+                is not sanitized, and can take <code>&lt;script&gt;</code> tags and <code>&lt;html&gt;</code> tags. This allows one to send malicious
+                javascript into the page that will actually be executed. Most notably, if a malicious user were to create a username containing
+                malicious scripts, everytime that user was searched for, the malicious code could be executed. Using a tool like Burp Suite, the
+                parameters for the search could be changed, allowing the database to be altered. To confirm, we injected the usersearch
+                with html and javascript. The result is pictured below. <br><img class='screenshot' src='images/trollfacehack.png'></li>
+                <li><h1>Resolution:</h1> This could be solved in several ways. (1.) All user input should be sanitized with a function that pulls
+                apart html characters (a javascript-equivalent for php's htmlentities(), perhaps?), then should be checked against the original input.
+                If there are differences, then the user may have been injecting scripts into the form. (2.) If scripts have been found in a search,
+                a function should grab the user's IP address (and possibly black-list it), the time, and any other identifying information to
+                make system admins aware of the attack.</li>
+            </ul>
+            </li>
+
+            <li class='issue'>
+            No User Authentication
+            <ul>
+                <li><h1>Location:</h1> blah </li>
+                <li><h1>Severity:</h1> blah </li>
+                <li><h1>Description:</h1> blah </li>
+                <li><h1>Resolution:</h1> blah </li>
+            </ul>
+            </li>
+
+        </ol>
         </div>
         <div class='section' id='conclusion'>
             <h1>Conclusion</h1>
             <p>Report goes here</p>
         </div>
 
-        <p>This is a body. </p>
     </body>
 </html>
