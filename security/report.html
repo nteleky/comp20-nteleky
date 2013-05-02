@@ -6,7 +6,10 @@
     </head>
     <body>
         <div id='header'>
+            <h1 id='title'><span>10:43</span> Security</h1>
             <h1><span>Scorecenter</span> Security Analysis</h1>
+            <h3>Performed by: 10:43 Security Analysts</h3>
+            <h4>Nicholas Teleky</h4>
             <div id='navbar'>
             </div>
         </div>
@@ -34,7 +37,9 @@
         </div>
         <div class='section' id='abstract'>
             <h1>Abstract</h1>
-            <p>Report goes here</p>
+            <p>The main problems found dealt with the insecure qualities of the database (this ScoreCenter uses MongoDB which, while a NoSQL DB, 
+            still needs to be protected from attacks involving huge amounts of requests) and the ability of any user to both post anything into
+            the database or into the HTML pages via userinput text boxes.</p>
         </div>
         <div class='section' id='issues'>
             <h1>Issues</h1>
@@ -78,12 +83,20 @@
             </li>
 
             <li class='issue'>
-            No User Authentication
+            No Limit to Number of Requests
             <ul>
-                <li><h1>Location:</h1> blah </li>
-                <li><h1>Severity:</h1> blah </li>
-                <li><h1>Description:</h1> blah </li>
-                <li><h1>Resolution:</h1> blah </li>
+                <li><h1>Location:</h1> web.js </li>
+                <li><h1>Severity:</h1> <span id='medium'>Medium</span> - With a scripting language, an experienced hacker could
+                pound the server with thousands of requests in a short amount of time in an attempt
+                to crash the whole API.</li>
+                <li><h1>Description:</h1> After viewing sourcecode, we determined that it would be possible to write a script that 
+                created several thousand POST requests in just a few minutes. After attempting this, we were able to fill the database
+                with a lot of useless information (a new database was created for the purposes of this test so that it could be deleted),
+                which, if put online and hosted by real servers, could be enough to bring down the database, or the entire app.</li>
+                <li><h1>Resolution:</h1> In the 'submit' section, have a check for IP address and other identifying information to make sure
+                that a bot (or a scripting program) isn't pounding the server with useless requests in an attempt to bring it down. For example,
+                perhaps after 5 requests in a timeframe of 10-20 seconds, don't allow any more post requests for some time. This would prevent
+                scripting programs from loading and filling the database.</li>
             </ul>
             </li>
 
@@ -91,7 +104,13 @@
         </div>
         <div class='section' id='conclusion'>
             <h1>Conclusion</h1>
-            <p>Report goes here</p>
+            <p>There are several security leaks in this ScoreCenter API as it stands now, allowing outside random users to overwrite, delete, or insert information. 
+            With that capability, the site itself could be attacked to change layout and
+            capabilities, costing money to fix and ultimately making it difficult for users to use properly.</p>
+            <p>Based on the changes and severity of the flaws found, it is recommended that you hire 10:43 Security Analysts
+            to review and fix this API. Based on the analysis, these issues could be fixed for approximately $100.00.
+            For an extra $100.00, 10:43 Security could also build a more secure platform for the site or 
+            improve the security of heroku with several add-ons, to make this app more secure and available for public use.</p>
         </div>
 
     </body>
